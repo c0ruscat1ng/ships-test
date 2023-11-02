@@ -1,44 +1,19 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {useQuery} from '@apollo/client';
 import api, {SHIP_LIST_QUERY} from '../../utils/api.ts';
 import {IShip} from "../../types.ts";
 import './ShipsList.scss'
 import Ship from "../Ship/Ship.tsx";
 import {classes, levels, nations} from "../../utils/data.ts";
-
-//Поиск всех наций тест
-// const nationTitlesSet = new Set<string>();
-// filteredShips.forEach((ship) => {
-//     nationTitlesSet.add(ship.type.title);
-// });
-// const uniqueNationTitles = Array.from(nationTitlesSet);
-// console.log(uniqueNationTitles);
+import {useShipFilter} from "../../hooks/useShipFilter.ts";
 
 const ShipsList: FC = () => {
     const [searchNationValue, setNationSearchValue] = useState<string>('');
     const [searchLevelValue, setLevelSearchValue] = useState<number>(0);
     const [searchClassValue, setClassSearchValue] = useState<string>('');
-    const [message, setMessage] = useState<boolean>(true);
     const {loading, error, data} = useQuery(SHIP_LIST_QUERY, {client: api});
-    const [filteredShips, setFilteredShips] = useState<IShip[]>([]);
+    const {filteredShips, message} = useShipFilter({data, searchNationValue, searchLevelValue, searchClassValue});
 
-    useEffect(() => {
-        if (data && data.vehicles) {
-            let filteredArray = data.vehicles;
-            setMessage(true);
-            if (searchNationValue) {
-                filteredArray = filteredArray.filter((ship: IShip) => ship.nation.title === searchNationValue);
-            }
-            if (searchLevelValue) {
-                filteredArray = filteredArray.filter((ship: IShip) => ship.level === searchLevelValue);
-            }
-            if (searchClassValue) {
-                filteredArray = filteredArray.filter((ship: IShip) => ship.type.title === searchClassValue);
-            }
-            setFilteredShips(filteredArray);
-            if (filteredArray.length === 0) setMessage(false);
-        }
-    }, [data, searchNationValue, searchLevelValue, searchClassValue]);
 
     if (loading) return <h1 className='loading'>Loading...</h1>;
     if (error) return <h1 className='loading'>Error: {error.message}</h1>;
@@ -87,8 +62,8 @@ const ShipsList: FC = () => {
                         или категорию.</p>
                 ) : (
                     <div className="ships__list">
-                        {filteredShips.map((ship: IShip, index: number) => (
-                                <Ship ship={ship} key={index}/>
+                        {filteredShips.map((ship: IShip) => (
+                                <Ship ship={ship} key={ship.title}/>
                             )
                         )}
                     </div>

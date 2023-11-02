@@ -8,10 +8,9 @@
   position: relative;
   border: 2px solid var(--font-color);
   padding: 15px;
-  border-radius: 20px;
   transition: all .5s linear;
   &:hover{
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
 }
 
@@ -56,4 +55,9 @@
 .ship__img {
   height: 200px;
   object-fit: cover;
+}
+
+.ship__skeleton{
+  height: 10px;
+  opacity: 0;
 }

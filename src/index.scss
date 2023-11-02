@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;200;300;400;500;600;700&display=swap');
 
 :root {
-  --bg-color: #080825;
-  --bg-header-color: #333;
+  --bg-header-color: #333333;
   --font-color: #fff;
+  --bg-color: rgba(21, 42, 99, 0.9);
+  --skin-bg-color: rgb(21, 42, 99)
 }
 
 * {
@@ -15,7 +16,8 @@
 body, html {
   font-family: 'Roboto Condensed', sans-serif;
   min-height: 100vh;
-  background: rgba(1, 3, 10, 0.73);
+  background-color: var(--skin-bg-color);
+  background-image: url('./../public/images/mk_background.jpg');
 }
 
 .container {
