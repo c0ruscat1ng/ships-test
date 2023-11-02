@@ -1,0 +1,16 @@
+.ships__list{
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.filter__container{
+  margin-bottom: 40px;
+}
+.loading{
+  color: white;
+}
+.ship_notfound{
+  font-size: 32px;
+  text-align: center;
+  color: var(--font-color);
+}
